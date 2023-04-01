@@ -1,0 +1,36 @@
+.input {
+  margin: 0 auto;
+  width: 850px;
+  position: relative;
+}
+.input textarea {
+  margin: 0 auto;
+  width: 700px;
+  resize: none;
+  border: 2px solid #e5e5e5;
+  padding: 5px 40px 5px 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 12px;
+  font-family: "Inter";
+  line-height: 14px;
+  letter-spacing: -0.026em;
+  color: #343540;
+}
+
+.input__button-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.input__button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.input button {
+  position: absolute;
+  right: 85px;
+  bottom: 20%;
+}

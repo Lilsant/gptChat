@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
+.answer {
+  width: 850px;
+  min-height: 80vh;
+  max-height: 80vh;
+  border: 1px solid #e5e5e5;
+  margin: 0 auto;
+  font-family: "Inter", sans-serif;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.answer {
+  scrollbar-width: thin;
+  scrollbar-color: $gray--lighter transparent;
+}
+.answer:-webkit-scrollbar {
+  width: 11px;
+}
+.answer:-webkit-scrollbar-track {
+  background: transparent;
+}
+.answer:-webkit-scrollbar-thumb {
+  background-color: $gray--lighter;
+  border-radius: 6px;
+  border: 3px solid transparent;
+}
+.answer__list {
+  list-style: none;
+}
+.answer__list-item {
+  padding: 24px 50px 24px 45px;
+  display: flex;
+  align-items: start;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+
+.answer__list-text {
+  text-align: left;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.026em;
+  color: #343540;
+}
+.answer__list-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+}
+
+.answer__list-item--assistent {
+  background: #f7f7f8;
+}
