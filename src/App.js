@@ -2,7 +2,7 @@ import {
   collection,
   addDoc,
   setDoc,
-  getDoc,
+  getDocs,
   doc,
   onSnapshot,
 } from "firebase/firestore";
@@ -22,13 +22,6 @@ import { db } from "./firebase/firebase";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [messages, setMessages] = useState([
-    {
-      role: "system",
-      content:
-        "Я хочу, чтобы ты указывал на мои ошибки в тексте. В грубой форме, будто ты гопник.",
-    },
-  ]);
   const [currentId, setCurrentId] = useState(0);
   const [currentDialog, setCurrentDialog] = useState(0);
   const [dialogList, setDialogList] = useState();
@@ -65,26 +58,51 @@ function App() {
     });
   }
 
-  async function getList(user) {
-    if (user) {
-      const docRef = doc(db, "users_list", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) return docSnap.data();
-    } else return [{ id: 0, messages: [{ role: "system", content: "Hello" }] }];
-  }
-  async function signInFunc(user) {
+  const fetchPost = async () => {
+    console.log("broooo");
+    await getDocs(collection(db, "users_list")).then((querySnapshot) => {
+      let newData;
+      querySnapshot.docs.forEach((doc) => {
+        if (doc.data().uid === user.uid) newData = doc.data().dialogList;
+      });
+      console.log(newData);
+      if (newData === undefined) {
+        setDoc(
+          doc(db, "users_list", user.uid),
+          {
+            dialogList: [
+              { id: 0, messages: [{ role: "system", content: "Hello" }] },
+            ],
+          },
+          { merge: true }
+        );
+        setDialogList([
+          { id: 0, messages: [{ role: "system", content: "Hello" }] },
+        ]);
+        console.log(dialogList, newData);
+        return;
+      }
+      setDialogList(newData);
+    });
+  };
+
+  useEffect(() => {
+    if (user) fetchPost();
+    console.log();
+  }, [user]);
+
+  function signInFunc(user) {
     setUser(user);
-    let bro = await getList(user);
-    console.log("HAHAHA", bro);
-    setDialogList(bro.dialogList, (prevValue, newValue) => newValue);
-    console.log(dialogList);
+    // let bro = await getList(user);
+    // console.log("HAHAHA", bro);
+    // setDialogList(bro);
+    // console.log(dialogList);
     setDoc(doc(db, "users_list", user.uid), {
       uid: user.uid,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      dialogList: bro.dialogList,
     });
-    console.log("bro", dialogList);
+    // console.log("bro", dialogList);
   }
   async function changeMessages(newMsg) {
     dialogList.forEach((el, i) => {
